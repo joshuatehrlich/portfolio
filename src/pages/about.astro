@@ -1,5 +1,26 @@
 ---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 
+const pageTitle = "About Me";
+
+const identity = {
+	firstName: "Josh",
+	country: "the United States",
+	occupation: "Game Designer",
+	hobbies: ["Reading", "Piano", "Chillaxing"]
+}
+
+const skills = ["Illustration", "GDScript", "10x d ev", "being a 10x dev", "professional art school attendee", '"he went to risd!"'];
+
+const happy = true;
+const finished = false;
+const goal = 3;
+
+const skillColor = "navy";
+const fontWeight = "oblique";
+const textCase = "uppercase";
 ---
 
 <html lang="en">
@@ -8,14 +29,43 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{pageTitle}</title>
+		<style define:vars={{skillColor, fontWeight, textCase}}>
+			h1 {
+				color: purple;
+				font-size: 4rem;
+			}
+			.skill {
+				color: var(--skillColor);
+				font-weight: var(--fontWeight);
+				text-transform: var(--textCase);
+				font-weight: bold;
+			}
+		</style>
 	</head>
 	<body>
-		<a href="/">Home</a>
-		<a href="/about">About</a>
-		<a href="/blog">Blog</a>
-		<h1>about me</h1>
+		<Navigation />
+
+		<h1>{pageTitle}</h1>
 		<h2>i am learning how to make my website</h2>
-		<p>that's really embarassing if you see this because it's totally not ready, i really shouldn't have published it</p>
+		
+		<p>stuff to know about me</p>
+		<ul>
+			<li>i am {identity.firstName}</li>
+			<li>i live in {identity.country} and work as a {identity.occupation}.</li>
+			{identity.hobbies.length >= 2 &&
+				<li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
+			}
+		</ul>
+		<p>Skills:</p>
+		<ul>
+			{skills.map((skill) => <li class="skill">{skill}</li>)}
+		</ul>
+
+		{happy && <p>I am happy to be learning Astro!</p>}
+		{finished && <p>I finished this tutorial!</p>}
+		{goal === 3 ? <p>My goal is to finish in 3 days.</p> : <p>My goal is not 3 days.</p>}
+
+		<Footer />
 	</body>
 </html>
